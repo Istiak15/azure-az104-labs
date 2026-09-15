@@ -16,16 +16,17 @@ IT professional with a background in enterprise support and cloud infrastructure
 
 ## 📋 Project Summary
 
-The goal of this project was to stand up a realistic two-network Azure environment for a growing organization — one network for core business services, one for a manufacturing division — and connect them with the appropriate security and name-resolution infrastructure. The work was split into four labs, each targeting a specific AZ-104 exam domain:
+The goal of this project was to stand up a realistic two-network Azure environment for a growing organization — one network for core business services, one for a manufacturing division — and connect them with the appropriate security and name-resolution infrastructure. The work is split into three labs, each targeting a specific area of Azure networking:
 
 | # | Lab | What It Covers | Report |
 |---|-----|----------------|--------|
 | 01 | Virtual Networking | VNets, subnetting, ARM template authoring & deployment | [Full report →](./01-virtual-networking/README.md) |
-| 02 | Identity & Governance | Entra ID users/groups, RBAC, Azure Policy, management groups | [Full report →](./02-identity-governance/README.md) |
 | 03 | Network Security | NSGs, Application Security Groups, rule prioritization | [Full report →](./03-nsg-asg/README.md) |
 | 04 | DNS | Public & private DNS zones, delegation, record management | [Full report →](./04-dns-configuration/README.md) |
 
 **Environment used:** A live Azure Pay-As-You-Go subscription. Every resource group was deleted immediately after each lab was verified, keeping total cloud spend for this entire project under $1 CAD.
+
+> Identity & Governance (Entra ID, RBAC, Azure Policy) labs are in progress and will be added here once complete.
 
 ---
 
@@ -76,16 +77,11 @@ Two independently addressed networks (10.20.x and 10.30.x) were deliberately cho
 - Private DNS zones and virtual network link-based internal resolution
 - Using `nslookup` to verify resolution and diagnose a real failed query
 
-**Identity & Governance**
-- Microsoft Entra ID users, groups, and group-based licensing
-- Role-Based Access Control — built-in roles, custom roles, scope inheritance
-- Azure Policy structure (definitions, initiatives, effects) and management group hierarchy
-
 ---
 
 ## 🛠️ Technologies & Tools
 
-`Microsoft Azure` · `Azure Portal` · `ARM Templates (JSON)` · `Azure Cloud Shell` · `VS Code` · `Microsoft Entra ID` · `Virtual Networks` · `Network Security Groups` · `Application Security Groups` · `Azure DNS` · `RBAC` · `Azure Policy` · `Git`
+`Microsoft Azure` · `Azure Portal` · `ARM Templates (JSON)` · `Azure Cloud Shell` · `VS Code` · `Virtual Networks` · `Network Security Groups` · `Application Security Groups` · `Azure DNS` · `Git`
 
 ---
 
@@ -93,7 +89,7 @@ Two independently addressed networks (10.20.x and 10.30.x) were deliberately cho
 
 Working toward **AZ-104: Microsoft Azure Administrator**, covering all five exam domains:
 
-- ✅ Manage Azure identities and governance (20–25%)
+- 🔄 Manage Azure identities and governance (20–25%)
 - 🔄 Implement and manage storage (15–20%)
 - 🔄 Deploy and manage Azure compute resources (20–25%)
 - ✅ Implement and manage virtual networking (15–20%)
