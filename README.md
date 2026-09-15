@@ -10,7 +10,7 @@ IT professional with a background in enterprise support and cloud infrastructure
 
 - 🎓 **B.Sc. Computing Science** — Saint Mary's University
 - 📜 **Certifications:** SC-900 (Security, Compliance & Identity Fundamentals), AZ-104 *(in progress)*
-- 💼 Focused on cloud administration, networking, and security
+- 💼 Focused on cloud administration, networking, and information security
 
 ---
 
@@ -103,5 +103,5 @@ Working toward **AZ-104: Microsoft Azure Administrator**, covering all five exam
 
 ## 📩 Contact
 
-- **LinkedIn:** [Add your LinkedIn URL here]
-- **Email:** [Add your professional email here]
+- LinkedIn: https://www.linkedin.com/in/kazi-istiak/
+- Email: kaziistiak.dev@gmail.com
