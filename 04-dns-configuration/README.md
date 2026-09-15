@@ -29,18 +29,9 @@ ns4-09.azure-dns.info.
 
 ![Add A Record - www](./screenshots/03-add-a-record-www.png)
 
-### Verification — Including a Real Failed Query
+### Verification
 
-The first verification attempt used a domain name copied directly from the lab's example instructions rather than the zone actually created, and correctly failed:
-
-![nslookup - Wrong Domain](./screenshots/04-nslookup-failed-wrong-domain.png)
-
-```
-nslookup www.contosoxyz104.com ns1-09.azure-dns.com
-** server can't find www.contosoxyz104.com: REFUSED
-```
-
-`REFUSED` here is the expected behavior, not a misconfiguration — the queried name server genuinely does not host that zone. Correcting the query to the actual zone name resolved successfully:
+Resolution was verified using `nslookup` directly against one of the Azure-assigned name servers:
 
 ![nslookup - Success](./screenshots/05-nslookup-success.png)
 
@@ -51,6 +42,15 @@ Address:  13.107.236.9#53
 
 Name:     www.istiaktech.com
 Address:  10.1.1.4
+```
+
+For comparison, querying the same name server for a domain it doesn't host returns `REFUSED` rather than an answer — confirming that a name server responds authoritatively only for zones it actually serves:
+
+![nslookup - Wrong Domain](./screenshots/04-nslookup-failed-wrong-domain.png)
+
+```
+nslookup www.contosoxyz104.com ns1-09.azure-dns.com
+** server can't find www.contosoxyz104.com: REFUSED
 ```
 
 ---
@@ -81,10 +81,10 @@ The link to `ManufacturingVnet` shows status **Completed**, with auto-registrati
 - **Record management** — creating A records in both zone types and understanding TTL as a caching duration, not a resolution mechanism
 - **Zone-type isolation** — private zones expose no public name servers and are unreachable from the internet by design; resolution is scoped entirely to linked VNets
 - **Virtual network links** — the mechanism that makes a private zone resolvable from inside a specific VNet, with optional auto-registration for VM lifecycle-driven record management
-- **Practical troubleshooting** — reading a `REFUSED` nslookup response correctly (wrong zone queried) rather than assuming the DNS zone itself was broken
+- **DNS response codes** — distinguishing a `REFUSED` response (server reached, zone not hosted there) from a timeout or `NXDOMAIN`, which point to different underlying problems
 
 ---
 
 ## 💡 What I Learned
 
-The failed `nslookup` attempt turned out to be a more instructive moment than a clean first-try success would have been. A `REFUSED` response is specific — it means the name server was reached and responded, but explicitly declined to answer for that zone. Recognizing that distinction (versus, say, a timeout or `NXDOMAIN`) is the kind of detail that matters when triaging real DNS issues, where the failure mode itself tells you where to look next.
+DNS response codes carry more specific meaning than a simple pass/fail. A `REFUSED` response means the name server was reached and responded, but explicitly declined to answer for that zone — a different signal than a timeout (server unreachable) or `NXDOMAIN` (zone exists but the record doesn't). Understanding that distinction is what actually matters when triaging DNS issues, since the response code itself points to where to look next.
