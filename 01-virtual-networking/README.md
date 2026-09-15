@@ -67,14 +67,9 @@ The exported template required several targeted changes:
 ![Template in VS Code - Part 2](./screenshots/10-manufacturing-template-vscode-2.png)
 ![Parameters in VS Code](./screenshots/11-manufacturing-parameters-vscode.png)
 
-### Troubleshooting — Real Issues Hit During Editing
+### Template Adjustments
 
-The exported template came with **duplicate subnet resource blocks** (an artifact of how Azure's export tool represents subnets both inline and as separate `virtualNetworks/subnets` resources). This surfaced two concrete bugs that had to be diagnosed and fixed before deployment would succeed:
-
-1. **Stale references** — the inline subnet definitions inside the VNet resource still had `id` fields pointing at the old subnet names (`SharedServicesSubnet`, `DatabaseSubnet`) instead of the new ones (`SensorSubnet1`, `SensorSubnet2`).
-2. **Mismatched duplicate blocks** — the separate bottom-level subnet resources still carried the *old* address prefixes (`10.20.x.x`) even after the top-level definitions had been updated to `10.30.x.x`, and one had a malformed string literal (`'/SensorSubnet1)]` missing a closing quote) that would have failed JSON parsing entirely.
-
-Both were corrected by aligning every subnet reference and address prefix to the new network, and validating the JSON syntax before deployment. The corrected, final template used for the successful deployment is included in this repo: [`../templates/manufacturing-vnet-template.json`](../templates/manufacturing-vnet-template.json), alongside its matching [`manufacturing-vnet-parameters.json`](../templates/manufacturing-vnet-parameters.json).
+The exported template needed more than a straightforward find-and-replace — Azure's export tool represents subnets both inline and as separate resources, and a few of those references (subnet names, address prefixes, and one JSON syntax issue) still pointed back at the original network after the initial edits. Working through the template line by line to align every reference to the new network turned out to be a good exercise in understanding what an ARM template actually declares, versus what the portal's wizard abstracts away. The corrected, final template used for the successful deployment is included in this repo: [`../templates/manufacturing-vnet-template.json`](../templates/manufacturing-vnet-template.json), alongside its matching [`manufacturing-vnet-parameters.json`](../templates/manufacturing-vnet-parameters.json).
 
 ### Deploying the Corrected Template
 
@@ -92,11 +87,11 @@ Both were corrected by aligning every subnet reference and address prefix to the
 - **CIDR address planning** — designing non-overlapping /16 spaces up front so the networks remain peering-compatible
 - **Subnet segmentation and reserved addresses** — Azure reserves 5 IPs per subnet (network, gateway, 2× DNS, broadcast), so each /24 yields 251 usable addresses, not 256
 - **Infrastructure as Code** — treating an exported ARM template as a reusable pattern rather than a one-off artifact
-- **Template debugging** — reading ARM JSON closely enough to spot stale `resourceId()` references and malformed string literals, then correcting them
+- **Template debugging** — reading ARM JSON closely enough to catch stale resource references before deployment, rather than relying on the export being correct as-is
 - **Deployment validation** — using the Review + Create tab's built-in validation before committing to a deployment
 
 ---
 
 ## 💡 What I Learned
 
-The most valuable part of this lab wasn't the successful deployment — it was debugging the template *before* it worked. Azure's portal-generated export isn't always clean; it left duplicate, inconsistently-updated subnet resources that would have deployed a broken or conflicting network if pushed as-is. Working through that by hand — matching every subnet name and address prefix against the intended design, and fixing a syntax error that would have failed at the JSON parser stage — built a much more concrete understanding of what an ARM template actually *is* (a declarative description of desired state) versus what the portal's click-through wizard abstracts away.
+The most valuable part of this lab wasn't the successful deployment — it was working through the exported template before it would deploy cleanly. Azure's portal-generated export isn't always ready to use as-is; matching every subnet name and address prefix against the intended design built a much more concrete understanding of what an ARM template actually *is* (a declarative description of desired state) versus what the portal's click-through wizard abstracts away.
