@@ -44,15 +44,6 @@ Name:     www.istiaktech.com
 Address:  10.1.1.4
 ```
 
-For comparison, querying the same name server for a domain it doesn't host returns `REFUSED` rather than an answer — confirming that a name server responds authoritatively only for zones it actually serves:
-
-![nslookup - Wrong Domain](./screenshots/04-nslookup-failed-wrong-domain.png)
-
-```
-nslookup www.contosoxyz104.com ns1-09.azure-dns.com
-** server can't find www.contosoxyz104.com: REFUSED
-```
-
 ---
 
 ## 🔒 Private DNS Zone
@@ -81,10 +72,9 @@ The link to `ManufacturingVnet` shows status **Completed**, with auto-registrati
 - **Record management** — creating A records in both zone types and understanding TTL as a caching duration, not a resolution mechanism
 - **Zone-type isolation** — private zones expose no public name servers and are unreachable from the internet by design; resolution is scoped entirely to linked VNets
 - **Virtual network links** — the mechanism that makes a private zone resolvable from inside a specific VNet, with optional auto-registration for VM lifecycle-driven record management
-- **DNS response codes** — distinguishing a `REFUSED` response (server reached, zone not hosted there) from a timeout or `NXDOMAIN`, which point to different underlying problems
 
 ---
 
 ## 💡 What I Learned
 
-DNS response codes carry more specific meaning than a simple pass/fail. A `REFUSED` response means the name server was reached and responded, but explicitly declined to answer for that zone — a different signal than a timeout (server unreachable) or `NXDOMAIN` (zone exists but the record doesn't). Understanding that distinction is what actually matters when triaging DNS issues, since the response code itself points to where to look next.
+The clearest distinction in this lab was between the two zone types themselves. A public zone is really just a hosting arrangement — Azure serves the DNS answers, but a domain registrar still has to point to Azure's name servers before any of it becomes reachable from the internet. A private zone skips that step entirely: it has no public name servers at all, and is only ever resolvable from the specific VNets it's linked to. Seeing that difference directly — one zone delegated and publicly queryable, the other scoped entirely to a single VNet — made the two models click in a way that reading about them hadn't.
