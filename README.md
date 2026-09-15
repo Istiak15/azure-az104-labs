@@ -1,6 +1,6 @@
-# ☁️ Azure Virtual Networking — Hands-On Implementation
+# ☁️ Azure AZ-104 — Hands-On Labs Portfolio
 
-A hands-on Azure networking project completed as part of my preparation for the **AZ-104: Microsoft Azure Administrator** certification. This repository documents the design, deployment, and verification of a multi-network Azure environment — covering virtual networks, subnetting, Infrastructure-as-Code deployment, network security, and DNS — all built and tested in a live Azure subscription.
+A collection of hands-on Microsoft Azure labs completed as part of my preparation for the **AZ-104: Microsoft Azure Administrator** certification. Every lab in this repository was built and verified in a **live Azure subscription** — real deployments, real configuration, real troubleshooting — and documented with portal screenshots and technical write-ups.
 
 ---
 
@@ -14,48 +14,18 @@ IT professional with a background in enterprise support and cloud infrastructure
 
 ---
 
-## 📋 Project Summary
-
-The goal of this project was to stand up a realistic two-network Azure environment for a growing organization — one network for core business services, one for a manufacturing division — and connect them with the appropriate security and name-resolution infrastructure. The work is split into three labs, each targeting a specific area of Azure networking:
+## 📚 Labs
 
 | # | Lab | What It Covers | Report |
 |---|-----|----------------|--------|
 | 01 | Virtual Networking | VNets, subnetting, ARM template authoring & deployment | [Full report →](./01-virtual-networking/README.md) |
 | 03 | Network Security | NSGs, Application Security Groups, rule prioritization | [Full report →](./03-nsg-asg/README.md) |
 | 04 | DNS | Public & private DNS zones, delegation, record management | [Full report →](./04-dns-configuration/README.md) |
+| 05 | Intersite Connectivity | VNet peering, Network Watcher verification, user-defined routing | [Full report →](./05-intersite-connectivity/README.md) |
 
-**Environment used:** A live Azure Pay-As-You-Go subscription. Every resource group was deleted immediately after each lab was verified, keeping total cloud spend for this entire project under $1 CAD.
+**Environment used:** A live Azure Pay-As-You-Go subscription. Each resource group was deleted immediately after its lab was verified, keeping total cloud spend across all labs to a few dollars — with per-lab cost governed by a budget alert and disciplined cleanup.
 
-> Identity & Governance (Entra ID, RBAC, Azure Policy) labs are in progress and will be added here once complete.
-
----
-
-## 🏗️ Architecture
-
-```
-Resource Group: az104-rg4  (East US)
-│
-├── CoreServicesVnet          10.20.0.0/16
-│   ├── SharedServicesSubnet  10.20.10.0/24  ← NSG: myNSGSecure attached
-│   └── DatabaseSubnet        10.20.20.0/24
-│
-├── ManufacturingVnet         10.30.0.0/16   ← deployed via ARM template
-│   ├── SensorSubnet1         10.30.20.0/24
-│   └── SensorSubnet2         10.30.21.0/24
-│
-├── myNSGSecure (NSG)
-│   ├── Inbound:  Allow 80/443 from ASG "asg-web"      (priority 100)
-│   └── Outbound: Deny all to Internet service tag       (priority 4096)
-│
-├── istiaktech.com (Public DNS Zone)
-│   └── www.istiaktech.com  →  10.1.1.4  (verified via nslookup)
-│
-└── private.istiaktech.com (Private DNS Zone)
-    ├── Linked to: ManufacturingVnet (link: manufacturing-link)
-    └── sensorvm.private.istiaktech.com  →  10.1.1.4
-```
-
-Two independently addressed networks (10.20.x and 10.30.x) were deliberately chosen with non-overlapping CIDR ranges — a prerequisite for VNet peering, even though peering itself wasn't part of this lab set.
+> Identity & Governance (Entra ID, RBAC, Azure Policy), Storage, Compute, and Monitoring labs are in progress and will be added here as they're completed.
 
 ---
 
@@ -64,24 +34,31 @@ Two independently addressed networks (10.20.x and 10.30.x) were deliberately cho
 **Networking**
 - CIDR-based address space planning across multiple VNets
 - Subnet segmentation and Azure's reserved-address behavior (5 IPs/subnet)
+- VNet peering — bidirectional links, non-transitivity, backbone routing
+- User-defined routes (UDRs) and network virtual appliance (NVA) traffic steering
 - Infrastructure as Code — exporting, editing, and redeploying ARM templates
-- Diagnosing and fixing real ARM template errors (malformed JSON, incorrect subnet `id` references)
+- Diagnosing real ARM template errors (malformed JSON, incorrect subnet `id` references)
 
 **Security**
 - Network Security Group rule design (priority ordering, allow/deny logic)
 - Application Security Groups for maintainable, IP-independent security rules
 - Understanding and safely overriding Azure's default outbound-allow behavior
+- Control-plane connectivity testing without exposing public inbound ports
 
 **DNS**
 - Public DNS zone creation and domain delegation model (NS records, SOA)
 - Private DNS zones and virtual network link-based internal resolution
 - Using `nslookup` to verify resolution and diagnose a real failed query
 
+**Diagnostics & Verification**
+- Network Watcher Connection Troubleshoot for before/after connectivity proof
+- PowerShell `Test-NetConnection` for TCP-level validation across peered networks
+
 ---
 
 ## 🛠️ Technologies & Tools
 
-`Microsoft Azure` · `Azure Portal` · `ARM Templates (JSON)` · `Azure Cloud Shell` · `VS Code` · `Virtual Networks` · `Network Security Groups` · `Application Security Groups` · `Azure DNS` · `Git`
+`Microsoft Azure` · `Azure Portal` · `ARM Templates (JSON)` · `Azure Cloud Shell` · `VS Code` · `Virtual Networks` · `VNet Peering` · `Network Security Groups` · `Application Security Groups` · `Route Tables / UDRs` · `Network Watcher` · `Azure DNS` · `Azure Run Command` · `PowerShell` · `Git`
 
 ---
 
