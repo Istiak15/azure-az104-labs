@@ -19,7 +19,7 @@ IT professional with a background in enterprise support and cloud infrastructure
 | # | Lab | What It Covers | Report |
 |---|-----|----------------|--------|
 | 01 | Virtual Networking | VNets, subnetting, ARM template authoring & deployment | [Full report →](./01-virtual-networking/README.md) |
-| 02 | Identity & Governance | Users, guests, groups, management groups, RBAC & custom roles | [Full report →](./02-identity-governance/README.md) |
+| 02 | Identity & Governance | Users, guests, groups, management groups, RBAC & custom roles, plus Azure Policy tagging enforcement & resource locks | [Full report →](./02-identity-governance/README.md) |
 | 03 | Network Security | NSGs, Application Security Groups, rule prioritization | [Full report →](./03-nsg-asg/README.md) |
 | 04 | DNS | Public & private DNS zones, delegation, record management | [Full report →](./04-dns-configuration/README.md) |
 | 05 | Intersite Connectivity | VNet peering, Network Watcher verification, user-defined routing | [Full report →](./05-intersite-connectivity/README.md) |
@@ -58,6 +58,8 @@ IT professional with a background in enterprise support and cloud infrastructure
 - Azure RBAC scope model and role inheritance
 - Custom role authoring with `NotActions` for least-privilege access
 - Activity Log auditing of access changes
+- Azure Policy `deny` and `modify` effects for mandatory tagging and auto-remediation
+- Resource locks (`CanNotDelete`) that take precedence over RBAC, Owner included
 
 **Diagnostics & Verification**
 - Network Watcher Connection Troubleshoot for before/after connectivity proof
@@ -67,7 +69,7 @@ IT professional with a background in enterprise support and cloud infrastructure
 
 ## 🛠️ Technologies & Tools
 
-`Microsoft Azure` · `Azure Portal` · `ARM Templates (JSON)` · `Azure Cloud Shell` · `VS Code` · `Virtual Networks` · `VNet Peering` · `Network Security Groups` · `Application Security Groups` · `Route Tables / UDRs` · `Network Watcher` · `Azure DNS` · `Azure Run Command` · `PowerShell` · `Git`
+`Microsoft Azure` · `Azure Portal` · `ARM Templates (JSON)` · `Azure Cloud Shell` · `VS Code` · `Virtual Networks` · `VNet Peering` · `Network Security Groups` · `Application Security Groups` · `Route Tables / UDRs` · `Network Watcher` · `Azure DNS` · `Azure Policy` · `Resource Tags` · `Resource Locks` · `Azure Run Command` · `PowerShell` · `Git`
 
 ---
 
