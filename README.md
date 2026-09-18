@@ -18,8 +18,8 @@ IT professional with a background in enterprise support and cloud infrastructure
 
 | # | Lab | What It Covers | Report |
 |---|-----|----------------|--------|
-| 01 | Virtual Networking | VNets, subnetting, ARM template authoring & deployment | [Full report →](./01-virtual-networking/README.md) |
-| 02 | Identity & Governance | Users, guests, groups, management groups, RBAC & custom roles, plus Azure Policy tagging enforcement & resource locks | [Full report →](./02-identity-governance/README.md) |
+| 01 | Identity & Governance | Users, guests, groups, management groups, RBAC & custom roles, plus Azure Policy tagging enforcement & resource locks | [Full report →](./01-identity-governance/README.md) |
+| 02 | Virtual Networking | VNets, subnetting, ARM template authoring & deployment | [Full report →](./02-virtual-networking/README.md) |
 | 03 | Network Security | NSGs, Application Security Groups, rule prioritization | [Full report →](./03-nsg-asg/README.md) |
 | 04 | DNS | Public & private DNS zones, delegation, record management | [Full report →](./04-dns-configuration/README.md) |
 | 05 | Intersite Connectivity | VNet peering, Network Watcher verification, user-defined routing | [Full report →](./05-intersite-connectivity/README.md) |

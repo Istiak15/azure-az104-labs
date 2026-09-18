@@ -1,4 +1,4 @@
-# Lab 01 — Virtual Networking: Design, Deploy & Automate
+# Lab 02 — Virtual Networking: Design, Deploy & Automate
 
 ## 🎯 Objective
 

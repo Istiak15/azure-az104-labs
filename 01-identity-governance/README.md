@@ -1,4 +1,4 @@
-# 🛡️ Lab 02 — Identity & Governance: Users, Groups, RBAC, Custom Roles & Policy-Driven Tagging
+# 🛡️ Lab 01 — Identity & Governance: Users, Groups, RBAC, Custom Roles & Policy-Driven Tagging
 
 Managing **identities** and enforcing **least-privilege access** across an Azure tenant — from creating internal and guest users, through group-based access management, to management-group-scoped role assignments and a purpose-built custom RBAC role. The second half moves from *who can act* to *what configurations are allowed*: using **Azure Policy** to make tagging mandatory, auto-remediate resources that are missing it, and locking a resource group against accidental deletion. Together, RBAC and Policy are the two halves of Azure governance.
 
